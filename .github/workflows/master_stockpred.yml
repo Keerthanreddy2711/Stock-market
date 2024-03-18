@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy ASP app to Azure Web App - StockPred
+name: Build and deploy ASP app to Azure Web App - S-market
 
 on:
   push:
@@ -40,27 +37,18 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: ASP-app
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_22DB66E8942C4B91A92FDA654F261EAF }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9CEBC08C3CEE46F7A8E4606A78EACD3A }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BC5F6364E7554C0095C0CC27D9E2E332 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'StockPred'
+          app-name: 'S-market'
           slot-name: 'Production'
-          package: .
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_25F1A80A8CDA4C34B20E12238BD2A5CA }}
+          package:
